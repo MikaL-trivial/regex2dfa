@@ -1,0 +1,18 @@
+%import common.WS
+%import common.LETTER
+%ignore WS
+
+?start : expr
+
+?expr : expr "+" term -> union
+      | term
+
+?term : term factor -> concat
+      | factor
+
+?factor : "(" expr ")"
+        | factor "*" -> kleene
+        | singleton -> singleton
+        | "\0" -> empty
+
+?singleton : LETTER
